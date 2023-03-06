@@ -58,7 +58,7 @@ app.post('/api/persons',(req,res) => {
     } 
 
     if (doExist) {
-        return res.send("The name of person already exists in the phonebook")
+        return res.json(newPerson)
     }
 
 
