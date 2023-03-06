@@ -51,20 +51,9 @@ app.get('/api/persons',(req,res) => {
 
 app.post('/api/persons',(req,res) => {
     let newPerson = req.body;
-    const doExist = persons.find(person => person.name == newPerson.name);
-
-    if (newPerson.name === "" || newPerson.number == "") {
-        return res.send("Please fill in your name and number")
-    } 
-
-    if (doExist) {
-        return res.json(newPerson)
-    }
-
-
     newPerson.id = Math.round(Math.random()*10000);
     persons.push(newPerson);
-    return res.send(`${newPerson.name} has been added`);
+    return res.json(newPerson);
 });
 
 app.get('/api/persons/:id',(req,res) => {
@@ -77,6 +66,21 @@ app.get('/api/persons/:id',(req,res) => {
         return res.status(404).end()
     }
 });
+
+app.put('/api/persons/:id',(req,res) => {
+    const id = req.params.id;
+    const newPerson = req.body;
+    const newPersons = persons.map(person => {
+        if (person.id == id) {
+            person = newPerson
+        }
+    })
+    
+    return res.json(newPerson)
+   
+    
+});
+
 
 
 app.delete('/api/persons/:id',(req,res) => {
